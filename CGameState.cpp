@@ -1,6 +1,10 @@
+#include "Engine.h"
 #include "CGameState.h"
 #include "CGameMain.h"
 #include <ctime>
+#include <Windows.h>
+#define WIN32_LEAN_AND_MEAN
+#include "LogFile.h"
 
 typedef enum {
 	RETURN_NORMAL = -1,
@@ -10,15 +14,18 @@ typedef enum {
 	RETURN_CHANGE
 } ReturnCode;
 
-CGameState::CGameState(Game* pGame) {
+CGameState::CGameState(Game* pGame) : m_pEngine(pGame) {
 	//m_pTitle = new CMainTitle;
 	this->Initialize();
-	m_pGame = new CGameMain(pGame);
+	this->m_pGame = new CGameMain(pGame);
 	//m_pScene = m_pGame;
-	if (!m_pGame->initScene(m_ScriptFile[0])) {
+	if (!this->m_pGame->initScene(m_ScriptFile[0])) {
 		std::string errStr = "Couldn't load script \"" + m_ScriptFile[0] + "\".";
 		MessageBoxA(NULL, errStr.c_str(), "Error loading script", MB_OK);
 		exit(-1);
+	}
+	else {
+		LogFile::writeLog("CGameState::CGameState() > Loaded starting script \"" + this->m_ScriptFile[0] + "\" successfuly.");
 	}
 }
 
@@ -87,17 +94,25 @@ uint32_t CGameState::updateLogic() {
 	case RETURN_RESUME:
 		break;
 	case RETURN_RELOAD:
+		m_pEngine->m_Renderer2D.cleanUp();
+		m_pGame->m_EnmMan.cleanUp();
 		if(!m_pGame->initScene(this->m_ScriptFile[gameVars.currentScriptId])) {
 			std::string errStr = "Couldn't load script \"" + m_ScriptFile[0] + "\".";
 			MessageBoxA(NULL, errStr.c_str(), "Error loading script", MB_OK);
 			exit(-1);
+		} else {
+			LogFile::writeLog("Reloading script \"" + this->m_ScriptFile[gameVars.currentScriptId] + '"');
 		}
 		break;
 	case RETURN_CHANGE:
+		m_pEngine->m_Renderer2D.cleanUp();
+		m_pGame->m_EnmMan.cleanUp();
 		if(!m_pGame->initScene(this->m_ScriptFile[gameVars.expectedScriptId])) {
 			std::string errStr = "Couldn't load script \"" + m_ScriptFile[0] + "\".";
 			MessageBoxA(NULL, errStr.c_str(), "Error loading script", MB_OK);
 			exit(-1);
+		} else {
+			LogFile::writeLog("Changing script \"" + this->m_ScriptFile[gameVars.currentScriptId] + "\" -> \"" + this->m_ScriptFile[gameVars.expectedScriptId] + "\"");
 		}
 		break;
 		//changeState(retCode);
@@ -106,7 +121,7 @@ uint32_t CGameState::updateLogic() {
 	return retCode;
 }
 
-void CGameState::updateDraw(sf::RenderWindow* target) {
+void CGameState::updateDraw(GLFWwindow* target) {
 	m_pGame->updateDraw(target);
 }
 

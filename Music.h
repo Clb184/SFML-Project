@@ -11,21 +11,22 @@ struct Music {
 
 class MusicManager {
 public:
-	void Initialize(char*&);
+	void Initialize(const std::vector<Music>&);
 	Music parseFile(char*);
 	void cleanUp();
 
 	void playMusic(int);
-	void resumeMusic();
-	void stopMusic();
-	void pauseMusic();
+	void resumeMusic(int);
+	void stopMusic(int);
+	void pauseMusic(int);
 
-	void setVolume(float);
-	void addVolume(float);
+	void setVolume(int, float);
+	void addVolume(int, float);
 
+	
 private:
-	std::vector<Music> m_MusicFile;
-	sf::Music m_Music;
+	std::vector<Music> m_MusicFile; 
+	std::vector<sf::Music> m_Music;
 };
 
 #endif

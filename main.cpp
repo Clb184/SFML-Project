@@ -1,37 +1,37 @@
+#define WIN32_LEAN_AND_MEAN
 #include "Engine.h"
+#include <iostream>
+#include "Utyls/System/FrameLimit.h"
 
-
+#ifndef _DEBUG
+int WINAPI wWinMain(HINSTANCE thisinst, HINSTANCE prevInst, PWSTR args, int cmdline) {
+#else
 int main() {
-	sf::RenderWindow mainWin; // (ENGINE_WH, ENGINE_TITLE, sf::Style::Titlebar | sf::Style::Close);
-	//sf::View cutView;
-	//cutView.setCenter((1280.0f / 1.5f) / 2, 240.0f);
-	//cutView.setSize(1280.0f / 1.5f, 480.0f);
+#endif
+	CFrameLimiter frameLimit;
+	frameLimit.setFPSLimit(60);
+	GLFWwindow* mainWin = nullptr; // (ENGINE_WH, ENGINE_TITLE, sf::Style::Titlebar | sf::Style::Close);
+	Game game(mainWin, &frameLimit);
+	glfwSetTime(0);
+	bool flag = false;
+	while (!glfwWindowShouldClose(mainWin)) {
+		glfwPollEvents();
+		glClearColor(game.r, game.g, game.b, 0.0);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		
+		if (frameLimit.onUpdate()) {
 
-	//mainWin.setView(cutView);
-	//mainWin.setFramerateLimit(60);
-
-	Game game(&mainWin);
-	while (mainWin.isOpen()) {
-		sf::Event sfEvent;
-		while (mainWin.pollEvent(sfEvent)) {
-			if (sfEvent.type == sf::Event::Closed) {
-				mainWin.close();
-				
-				//exit(0);
+			if (!game.UpdateLogic()) {
+				break;
 			}
-		}
 
-		//mainWin.clear();
-		if (!game.UpdateLogic()) {
-			mainWin.close();
-			//exit(0);
 		}
-		if (mainWin.hasFocus()) {
-			game.UpdateDraw();
-			mainWin.display();
+		else {
+			Sleep(10);
 		}
-		//Sleep(12);
-		//game.m_ScreenCap.update(mainWin);
+		game.UpdateDraw();
+		glfwSwapBuffers(mainWin);
 	}
+	glfwTerminate();
 	return 0;
 }

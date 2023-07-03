@@ -1,15 +1,27 @@
 #pragma once
-#include <SFML\Graphics.hpp>
-#include <Windows.h>
-#include "Animation.h"
-#define WIN32_LEAN_AND_MEAN
-//#include <stack>
+//#include <SFML\Graphics.hpp>
 
 #define safeDelete(x) if(x){delete x; x = NULL;}
 
 #define PI 3.1415926535897932384626433832795f
+
 #define RAD(x) (x * (PI / 180))
 
+#define ThisForEachVec(vec)\
+	for(auto& i : vec)
+
+#include <stdint.h>
+#include <math.h>
+#ifdef CLB_INCLUDE_GLEW
+	//#include <GL/glew.h>
+//#include <Windows.h>
+	//#include "Utyls\OpenGL\Animation.h"
+//#define WIN32_LEAN_AND_MEAN
+//#include <stack>
+
+
+
+/*
 inline void drawCircle(float x, float y, float rad, sf::Color c, sf::RenderWindow* target) {
 	sf::CircleShape circle(rad);
 	circle.setOutlineColor(c);
@@ -18,7 +30,7 @@ inline void drawCircle(float x, float y, float rad, sf::Color c, sf::RenderWindo
 	circle.setOrigin(rad, rad);
 	circle.setPosition(sf::Vector2f(x, y));
 	target->draw(circle);
-}
+}*/
 
 //inline void drawCircle(float x, float y, float rad, sf::Color c, Graphics* gfx) {
 //	double angle = 0.0f, 
@@ -39,7 +51,20 @@ inline void drawCircle(float x, float y, float rad, sf::Color c, sf::RenderWindo
 //		cnt++;
 //	}
 //}
-
+/*
+inline void drawLine(float x1, float y1, float x2, float y2, GLfloat r, GLfloat g, GLfloat b) {
+	GLfloat vertex[10]{
+		x1, y1, r, g, b,
+		x2, y2, r, g, b,
+	};
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 5, &vertex[0]);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 5, &vertex[3]);
+	glEnableVertexAttribArray(1);
+	//sf::Shader::bind(renderer);
+	glDrawArrays(GL_LINE_STRIP, 0, 2);
+}*/
+/*
 inline void drawLine(float x, float y, float length, float dir, float offset, sf::Color c, sf::RenderWindow* target) {
 	sf::VertexArray line(sf::Lines, 2);
 	line[0].color = c;
@@ -64,7 +89,7 @@ inline void drawRect(Rect quad,sf::Transform trans, sf::Color c, sf::RenderWindo
 	rect[4].color = c;
 
 	target->draw(rect, 5, sf::LineStrip, trans);
-}
+}*/
 
 #define ThisForEach(it, x) for (std::list<Enemy>::iterator it = x.begin(); it != x.end(); ++it)
 
@@ -111,9 +136,10 @@ inline void normRad(float& ang) {
 
 }
 
-#define ThisForEachVec(vec)\
-	for(auto& i : vec)
+#endif
 
+
+#define ENEMY_MAX 3000
 
 union constant {
 	//Value holders
@@ -139,3 +165,8 @@ union constant {
 	constexpr operator uint16_t() { return uint16_t(i); }
 	constexpr operator uint8_t() { return uint8_t(i); }
 };
+
+constexpr uint64_t makeInt64(int32_t low, uint32_t high) {
+	uint32_t __bits64[2] = { low, high };
+	return *(uint64_t*)__bits64;
+}

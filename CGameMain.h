@@ -1,10 +1,11 @@
 #pragma once
-#include <GL/glew.h>
-#include <SFML/Audio.hpp>
+//#include <GL/glew.h>
+//#include <SFML/Audio.hpp>
 
 //#include "CGameState.h"
-#include "Animation.h"
-#include "Renderer2D.h"
+//#include "Utyls\OpenGL\Animation.h"
+#include "Utyls\OpenGL\Renderer2D.h"
+#include "Utyls\OpenGL\RenderTexture.h"
 #include "Enemy.h"
 #include "Music.h"
 
@@ -14,7 +15,7 @@
 //class Game;
 
 //#include "CScene.h"
-#include "CWindowSys.h"
+//#include "CWindowSys.h"
 //#include "script_test.h"
 
 //extern class CGameState;
@@ -41,8 +42,8 @@ struct GameGlobals {
 
 	//For future usage...
 	float cam_x = 0.0f;
-	float cam_y = 0.0f;
-	float cam_z = 0.0f;
+	float cam_y = -7.0f;
+	float cam_z = -5.0f;
 	float cam_fov = RAD(90.0f);
 
 	//Score stuff
@@ -66,35 +67,61 @@ struct GameGlobals {
 };
 
 typedef enum {
+	SECTION_UNKNOWN = -1,
+	SECTION_MUSIC = 0,
+	SECTION_SOUND,
+	SECTION_QUAD,
+	SECTION_SHADER2D,
+	SECTION_3DMODEL,
+	SECTION_SHADER3D,
+}SECTION_KIND;
+
+typedef struct {
+	SECTION_KIND sectionKind;
+	std::vector<int> stringIDs;
+	std::vector<Music> musicIDs;
+	std::vector<std::pair<int, int>> shaderIDs;
+	std::pair<std::string, std::string> shaderBase;
+} ScriptSection;
+
+typedef enum {
 	RESUME = 1,
 	TITLE
 } PauseOptions2;
-
+/*
 class CPauseMenu : public CMenu {
 public:
 	CPauseMenu() {}
 	uint32_t updateLogic();
 };
-
+*/
 class CGameMain {
 public:
 	bool initScene(std::string);
 	char* initScript(std::string);
 	uint32_t updateLogic();
-	void updateDraw(sf::RenderWindow*);
+	void updateDraw(GLFWwindow*);
 	bool cleanUp();
+	bool IsPaused() const;
 
-	CGameMain(Game* program) : m_EnmMan(this, program), m_pGame(program) {}
+	CGameMain(Game*);
 	~CGameMain();
+private:
+	void loadResources(char*&);
+	ScriptSection __getSection(char*&);
+	void __getAllStrings(char*&);
+	std::vector<std::string> __getStringList(std::vector<int>); 
+	std::vector<std::pair<std::string, std::string>> __getStringList(std::vector<std::pair<int, int>>);
 private:
 	//Script itself and flags
 	bool m_IsPaused = false;
-	uint32_t m_Flags;
+	uint32_t m_Flags = 0;
 	char* m_File = nullptr;
-	CPauseMenu* m_PauseMenu = nullptr; 
-	Game* m_pGame;
+	char* m_File2 = nullptr;
+	//CPauseMenu* m_PauseMenu = nullptr; 
 
 	//Graphic stuff
+	RenderTexture m_RenderTex;
 	/*
 	sf::Vertex m_tlv[4];
 	sf::RenderTexture* m_RenderTex = nullptr;
@@ -105,8 +132,11 @@ public:
 	GameGlobals m_GlobalVars;
 	
 	EnemyManager m_EnmMan;
-	MusicManager m_MusicMan;
+	EnemyManager m_EnmManEx;
 
+	std::vector<std::string> m_StrContainer;
+
+	Game* m_pGame;
 	uint32_t m_Time;
 };
 
@@ -114,5 +144,9 @@ template<typename T, typename ...args>
 void render3D(const T& func, args... param) {
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	func(param...);
-	glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_SRC_ALPHA);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); 
+	//glBlendFunc(GL_SRC_ALPHA, GL_ONE); 
+	//glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_SRC_ALPHA);
+	//glBlendFunc(GL_ONE, GL_ONE);
+	//glBlendFuncSeparate();
 }

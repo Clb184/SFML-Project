@@ -4,7 +4,10 @@
 //#include "CScene.h"
 //#include "CMainTitle.h"
 #include <stack>
-#include "Commons.h"
+#include <map>
+#include <string>
+#include <GLFW/glfw3.h>
+//#include "Commons.h"
 
 class Game;
 class CGameMain;
@@ -17,13 +20,14 @@ public:
 
 	void Initialize();
 	uint32_t updateLogic();
-	void updateDraw(sf::RenderWindow*);
+	void updateDraw(GLFWwindow*);
 	void changeState(uint32_t);
 	friend class Game;
 private:
 
 	//CMainTitle* m_pTitle;
 	CGameMain* m_pGame;
+	Game* m_pEngine;
 	//CScene* m_pScene;
 	//uint8_t m_CurrentScene = SCENE_TITLE;
 	std::stack<uint32_t> m_GameState;

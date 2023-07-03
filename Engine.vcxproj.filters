@@ -16,6 +16,9 @@
     <Filter Include="Shaders">
       <UniqueIdentifier>{397488cc-36aa-4b23-9d79-b214ac91b60e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{6722de17-8f7c-4f9f-b41b-1daa32c2e99e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -30,9 +33,6 @@
     <ClCompile Include="CGameMain.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="Animation.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="CalcStack.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
@@ -45,13 +45,82 @@
     <ClCompile Include="Sound.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="Renderer2D.cpp">
+    <ClCompile Include="HitboxCalc.inl">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="CWindowSys.cpp">
+    <ClCompile Include="Utyls\OpenGL\Animation.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="FixedVector.cpp">
+    <ClCompile Include="Utyls\OpenGL\OpenGLObject.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Utyls\OpenGL\Renderer2D.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Utyls\OpenGL\Shader.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Utyls\OpenGL\Texture.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Utyls\FileIO\BinaryFile.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Utyls\FileIO\FileIO.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Utyls\FileIO\TextFile.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Utyls\System\FixedVector.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Utyls\System\FrameLimit.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Utyls\OpenGL\TextureBase.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Utyls\OpenGL\RenderTexture.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="LogFile.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Utyls\OpenGL\3D\3DModel.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Utyls\OpenGL\3D\OBJModel.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Utyls\OpenGL\3D\TriDiObject.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Utyls\OpenGL\3D\Camera.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Utyls\OpenGL\3D\Light.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="exinclude\imgui-1.89.5\backends\imgui_impl_glfw.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="exinclude\imgui-1.89.5\imgui.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="exinclude\imgui-1.89.5\imgui_demo.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="exinclude\imgui-1.89.5\imgui_draw.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="exinclude\imgui-1.89.5\imgui_tables.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="exinclude\imgui-1.89.5\imgui_widgets.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="exinclude\imgui-1.89.5\backends\imgui_impl_opengl3.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
@@ -74,9 +143,6 @@
     <ClInclude Include="ScriptBase.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="Animation.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="CalcStack.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
@@ -95,31 +161,110 @@
     <ClInclude Include="Sound.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer2D.h">
+    <ClInclude Include="HitboxCalc.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="CWindowSys.h">
+    <ClInclude Include="Utyls\OpenGL\Animation.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="FixedVector.h">
+    <ClInclude Include="Utyls\OpenGL\OpenGLObject.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Utyls\OpenGL\Renderer2D.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Utyls\OpenGL\Shader.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Utyls\OpenGL\Texture.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Utyls\FileIO\BinaryFile.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Utyls\FileIO\FileIO.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Utyls\FileIO\TextFile.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Utyls\System\FixedVector.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Utyls\System\FrameLimit.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Utyls\OpenGL\Font.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Utyls\OpenGL\TextureBase.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Utyls\OpenGL\RenderTexture.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="LogFile.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Utyls\OpenGL\3D\3DModel.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Utyls\OpenGL\3D\OBJModel.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Utyls\OpenGL\3D\TriDiObject.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Utyls\OpenGL\3D\Camera.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Utyls\OpenGL\3D\Light.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="exinclude\imgui-1.89.5\backends\imgui_impl_glfw.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="exinclude\imgui-1.89.5\imstb_truetype.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="exinclude\imgui-1.89.5\imconfig.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="exinclude\imgui-1.89.5\imgui.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="exinclude\imgui-1.89.5\imgui_internal.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="exinclude\imgui-1.89.5\imstb_rectpack.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="exinclude\imgui-1.89.5\imstb_textedit.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="exinclude\imgui-1.89.5\backends\imgui_impl_opengl3.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="exinclude\imgui-1.89.5\backends\imgui_impl_opengl3_loader.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="def_2.frag">
-      <Filter>Shaders</Filter>
-    </None>
     <None Include="test.frag">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="def_2.geom">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="def_2.vert">
       <Filter>Shaders</Filter>
     </None>
     <None Include="test.vert">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="HitCalc.inl">
+      <Filter>Archivos de origen</Filter>
+    </None>
+    <None Include="resource\shaders\def_2.vert" />
+    <None Include="resource\shaders\def_2.frag" />
+    <None Include="resource\shaders\def_3d.frag" />
+    <None Include="resource\shaders\def_3d.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Script.txt" />
   </ItemGroup>
 </Project>

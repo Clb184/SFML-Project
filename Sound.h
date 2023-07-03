@@ -1,28 +1,43 @@
 #pragma once
 #include <SFML/Audio.hpp>
-#include <map>
+
+constexpr int SOUND_MAX = 16;
 
 class SoundManager;
 
 class Sound {
 public:
-	void Initialize(uint32_t);
-	friend class SoundManager;
+	Sound();
+	void Initialize();
+	bool loadSound(std::string);
+
+	void playSound();
+	void setVolume(float);
+	void setPitch(float);
+	bool isLastPlaying();
+	bool isAllPlaying();
+	void destroy();
+
 private:
-	uint32_t m_BufferIndex = 0;
-	uint32_t m_SoundMax;
-	sf::Sound* m_Sound;
+	uint32_t m_BufferIndex;
+	sf::Sound m_Sound[SOUND_MAX]; //16 channels, for whatever
 	sf::SoundBuffer m_SndBuffer;
+	std::string m_Name;
 };
 
 class SoundManager {
 public:
-	void Initialize(char*&);
-	Sound parseFile(char*);
+	bool Initialize(const std::vector<std::string>&);
 	void playSound(int);
+	void setVol(int);
+	void setPitch(int);
+	bool isLastPlaying(int);
+	bool isAllPlaying(int);
 	//void setVolume(float);
 	//void setMasterVolume(float);
 	void cleanUp();
 private:
-	std::map<uint32_t, Sound> m_SoundArray;
+	bool loadSound(const std::string&, Sound&);
+private:
+	std::vector<Sound> m_SoundArray;
 };
