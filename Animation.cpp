@@ -1,6 +1,7 @@
 #include "Animation.h"
-#include <regex>
-
+#include "..\..\ScriptBase.h"
+#include <string>
+/*
 void AnimationSetup::Initialize(char*& buffer) {
 	if (buffer) {
 		AnimeSlot temp;
@@ -32,9 +33,9 @@ void AnimationSetup::Initialize(char*& buffer) {
 		}
 	}
 	return;
-}
+}*/
 
-void AnimationSetup::Initialize(const std::list<std::string>& fileList){
+void AnimationSetup::Initialize(const std::vector<std::string>& fileList){
 	if (fileList.size() > 0) {
 		for (auto& n : fileList) {
 			AnimeSlot slot;
@@ -64,33 +65,36 @@ enum {
 };
 
 AnimeSlot AnimationSetup::parseFile(char* buffer, size_t size) {
-	AnimeSlot ret;
-	AnimeFileHeader File;
+	AnimeSlot ret = {};
 
 	//Animation tempAnimation;
 	AnimeRect tempRect;
-	Anime tempAnime;
-	std::vector<Anime> tempVec;
 	Rect tempRect2;
 
 	size_t pos = 0;
 	uint32_t Id = 0;
-	memcpy(&File, buffer, sizeof(AnimeFileHeader));
-	pos += sizeof(AnimeFileHeader);
-
+	//pos += sizeof(AnimeFileHeader);
+	uint32_t sign = MakeCStr(buffer[pos], buffer[pos + 1], buffer[pos + 2], buffer[pos + 3]);
+	MakeCStr('A', 'N', 'M', 'F');
+	pos += 4;
+	std::string name = "";
+	while (char c = buffer[pos++]) {
+		name.push_back(c);
+	}
+	//pos++;
 	for (std::map<int, std::string>::iterator i = m_TexIDContainer.begin(); i != m_TexIDContainer.end(); ++i) {
-		if (i->second == File.FileName)
+		if (i->second == name)
 			break;
 		Id++;
 	}
 	ret.texId = Id;
 
 	if (m_TexIDContainer.find(Id) == m_TexIDContainer.end()) {
-		m_TexIDContainer.insert({Id, File.FileName});
+		m_TexIDContainer.insert({Id, name});
 	}
 
 	while (pos < size) {
-		switch (*(int*)(buffer + pos)) {
+		switch (*(int*)(&buffer[pos])) {
 		case RECT:
 			pos += 4;
 			memcpy(&tempRect, buffer + pos, sizeof(AnimeRect));
@@ -129,14 +133,15 @@ AnimeSlot AnimationSetup::parseFile(char* buffer, size_t size) {
 }
 
 
-std::vector<sf::Texture> AnimationSetup::initializeTexture() {
-	std::vector<sf::Texture> ret;
+std::vector<Texture> AnimationSetup::initializeTexture() {
+	std::vector<Texture> ret;
 	if (!m_TexIDContainer.empty()) {
-		sf::Texture temp;
+		Texture temp;
 		for (auto& it : m_TexIDContainer) {
-			temp.loadFromFile(it.second);
-			temp.generateMipmap();
-			temp.setRepeated(true);
+			temp.loadFromFile(it.second, true);
+			//temp.generateMipmap();
+			//temp.setRepeated(true);
+			//temp.setSrgb(true);
 			ret.push_back(temp);
 		}
 	}
